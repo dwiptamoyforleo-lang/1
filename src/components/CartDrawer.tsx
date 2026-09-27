@@ -70,7 +70,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <span className="text-xs text-[#c9a84c] font-serif italic">({items.length} Pieces)</span>
               </div>
               <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-0.5">
-                Maison Sarvatt Private Cart
+                Studio Template Private Cart
               </p>
             </div>
             <button
