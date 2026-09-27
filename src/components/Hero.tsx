@@ -25,7 +25,7 @@ export const Hero: React.FC<HeroProps> = ({
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2000&auto=format&fit=crop"
-          alt="Sarvatt Couture Silhouette"
+          alt="Template Couture Silhouette"
           className="w-full h-full object-cover object-top opacity-30 mix-blend-luminosity scale-105 transition-transform duration-1000 ease-out"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#09080b] via-[#09080b]/80 to-transparent"></div>
@@ -57,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="max-w-3xl space-y-6">
           <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-sm bg-white/[0.04] border border-[#c9a84c]/30 text-[#c9a84c] text-xs uppercase tracking-[0.25em]">
             <Sparkles size={12} />
-            <span>The Omnipresent Form • सर्वत्</span>
+            <span>The Omnipresent Form • Template</span>
           </div>
 
           <h1 className="font-display-luxury text-4xl sm:text-6xl lg:text-7xl font-light tracking-[0.08em] text-[#fbf8f3] leading-[1.08]">
