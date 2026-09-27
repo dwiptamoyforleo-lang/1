@@ -80,7 +80,7 @@ export const BespokeModal: React.FC<BespokeModalProps> = ({
               Appointment Access Pass: {bookingToken}
             </p>
             <p className="text-sm text-white/70 max-w-md mx-auto leading-relaxed font-light">
-              Studio Template looks forward to welcoming you at our {formData.city} salon. Our Master Tailor and Fabric Archivist have reserved your private session for {formData.preferredDate}.
+              Maison BrandName looks forward to welcoming you at our {formData.city} salon. Our Master Tailor and Fabric Archivist have reserved your private session for {formData.preferredDate}.
             </p>
             <div className="pt-4">
               <button

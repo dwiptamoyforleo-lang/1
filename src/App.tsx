@@ -27,13 +27,13 @@ import { SlidersHorizontal, Sparkles, CheckCircle2, ArrowRight } from 'lucide-re
 export const App: React.FC = () => {
   // Currency state
   const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>(() => {
-    return (localStorage.getItem('template_currency') as CurrencyCode) || 'USD';
+    return (localStorage.getItem('brandname_currency') as CurrencyCode) || 'USD';
   });
 
   // Cart state
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
-      const saved = localStorage.getItem('template_cart');
+      const saved = localStorage.getItem('brandname_cart');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -43,7 +43,7 @@ export const App: React.FC = () => {
   // Wishlist state
   const [wishlist, setWishlist] = useState<Product[]>(() => {
     try {
-      const saved = localStorage.getItem('template_wishlist');
+      const saved = localStorage.getItem('brandname_wishlist');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -68,15 +68,15 @@ export const App: React.FC = () => {
 
   // Sync to local storage
   useEffect(() => {
-    localStorage.setItem('template_currency', selectedCurrency);
+    localStorage.setItem('brandname_currency', selectedCurrency);
   }, [selectedCurrency]);
 
   useEffect(() => {
-    localStorage.setItem('template_cart', JSON.stringify(cartItems));
+    localStorage.setItem('brandname_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   useEffect(() => {
-    localStorage.setItem('template_wishlist', JSON.stringify(wishlist));
+    localStorage.setItem('brandname_wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
 
   const showToast = (msg: string) => {

@@ -140,7 +140,13 @@
         </div>
         <!-- Secondary Sign In Button: Text specifically "Sign in", distinct typography and styling -->
         <a href="contact.html" class="btn-signin-secondary" title="Access your existing account">
-          <span class="portal-icon">🔑</span>
+          <span class="portal-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
+              <path d="m21 2-9.6 9.6"></path>
+              <circle cx="7.5" cy="15.5" r="5.5"></circle>
+            </svg>
+          </span>
           <span>Sign in</span>
           <span class="portal-arrow">&rarr;</span>
         </a>
@@ -196,9 +202,9 @@
               Our signature tier engineered for maximum reliability, elevated quality, and refined presentation.
             </p>
             <ul class="offering-item-list">
-              <li><span class="offering-check">✓</span> Tailored solutions adapted to your exact requirements</li>
-              <li><span class="offering-check">✓</span> Thorough quality checks and verified standards</li>
-              <li><span class="offering-check">✓</span> Comprehensive documentation and onboarding guide</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Tailored solutions adapted to your exact requirements</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Thorough quality checks and verified standards</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Comprehensive documentation and onboarding guide</li>
             </ul>
           </div>
           <div style="margin-top: 1.5rem;">
@@ -215,9 +221,9 @@
               Dedicated consultations, bespoke packages, or personalized private sessions curated by our team.
             </p>
             <ul class="offering-item-list">
-              <li><span class="offering-check">✓</span> 1-on-1 discovery and custom project scoping</li>
-              <li><span class="offering-check">✓</span> Priority scheduling with flexible time windows</li>
-              <li><span class="offering-check">✓</span> Ongoing milestone updates and direct support channel</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> 1-on-1 discovery and custom project scoping</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Priority scheduling with flexible time windows</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Ongoing milestone updates and direct support channel</li>
             </ul>
           </div>
           <div style="margin-top: 1.5rem;">
@@ -234,9 +240,9 @@
               Continuous care, regular updates, warranty assistance, and access to our verified resource directory.
             </p>
             <ul class="offering-item-list">
-              <li><span class="offering-check">✓</span> Dedicated helpdesk assistance and quick replies</li>
-              <li><span class="offering-check">✓</span> Knowledge base with guides and FAQs</li>
-              <li><span class="offering-check">✓</span> Verified client community and exclusive announcements</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Dedicated helpdesk assistance and quick replies</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Knowledge base with guides and FAQs</li>
+              <li><span class="offering-check" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.5 3.5 6.5-7.5"/></svg></span> Verified client community and exclusive announcements</li>
             </ul>
           </div>
           <div style="margin-top: 1.5rem;">
@@ -264,13 +270,17 @@
       <div class="grid grid-2">
         <!-- Highlight Card 1 -->
         <div class="card" style="padding: 2.25rem; display: flex; gap: 1.5rem; align-items: flex-start;">
-          <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;">⚡</div>
+          <div class="feature-icon icon-box-amber" style="flex-shrink: 0; margin-bottom: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
           <div>
             <h3 class="card-title">Engineered for Rapid Turnaround</h3>
             <p class="card-text">
               We eliminate friction from initiation to delivery. Inquiries receive responses within 24 hours, and projects or bookings benefit from automated scheduling and instant confirmation.
             </p>
-            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Rapid Turnaround &amp; Response" data-desc="Our workflow pipelines and booking dispatch systems ensure minimal wait times and zero administrative friction." data-icon="⚡">
+            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Rapid Turnaround &amp; Response" data-desc="Our workflow pipelines and booking dispatch systems ensure minimal wait times and zero administrative friction." data-icon="speed">
               Preview Process Details
             </button>
           </div>
@@ -278,13 +288,18 @@
 
         <!-- Highlight Card 2 -->
         <div class="card" style="padding: 2.25rem; display: flex; gap: 1.5rem; align-items: flex-start;">
-          <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;">🛡️</div>
+          <div class="feature-icon icon-box-emerald" style="flex-shrink: 0; margin-bottom: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+          </div>
           <div>
             <h3 class="card-title">Tested Standards &amp; Verified Integrity</h3>
             <p class="card-text">
               Every deliverable, service session, or product batch adheres to verified security, safety, and performance benchmarks. Our processes are open and rigorously evaluated.
             </p>
-            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Verified Standards" data-desc="From high-contrast accessibility compliance to strict safety protocols, every touchpoint is tested for quality assurance." data-icon="🛡️">
+            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Verified Standards" data-desc="From high-contrast accessibility compliance to strict safety protocols, every touchpoint is tested for quality assurance." data-icon="standards">
               View Standards Report
             </button>
           </div>
@@ -292,13 +307,21 @@
 
         <!-- Highlight Card 3 -->
         <div class="card" style="padding: 2.25rem; display: flex; gap: 1.5rem; align-items: flex-start;">
-          <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;">🎨</div>
+          <div class="feature-icon icon-box-purple" style="flex-shrink: 0; margin-bottom: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="13.5" cy="6.5" r=".5"></circle>
+              <circle cx="17.5" cy="10.5" r=".5"></circle>
+              <circle cx="8.5" cy="7.5" r=".5"></circle>
+              <circle cx="6.5" cy="12.5" r=".5"></circle>
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+            </svg>
+          </div>
           <div>
             <h3 class="card-title">Clean &amp; Adaptive Aesthetic</h3>
             <p class="card-text">
               Built on clean semantic foundations, responsive proportions, and elegant dual theme modes (dark &amp; light) that look pristine on mobile, tablet, and desktop screens.
             </p>
-            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Adaptive Design Philosophy" data-desc="Carefully tuned typography, generous breathing room, and responsive grid layouts ensure seamless navigation anywhere." data-icon="🎨">
+            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Adaptive Design Philosophy" data-desc="Carefully tuned typography, generous breathing room, and responsive grid layouts ensure seamless navigation anywhere." data-icon="design">
               Inspect Layout System
             </button>
           </div>
@@ -306,13 +329,20 @@
 
         <!-- Highlight Card 4 -->
         <div class="card" style="padding: 2.25rem; display: flex; gap: 1.5rem; align-items: flex-start;">
-          <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;">🤝</div>
+          <div class="feature-icon icon-box-blue" style="flex-shrink: 0; margin-bottom: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
           <div>
             <h3 class="card-title">Transparent &amp; Fair Collaboration</h3>
             <p class="card-text">
               No hidden add-ons or locked-in contracts. You get crystal-clear deliverables, transparent milestones, and human-first customer service whenever you need assistance.
             </p>
-            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Transparent Collaboration" data-desc="Honest estimates, clear terms of engagement, and dependable guarantees designed for long-term customer trust." data-icon="🤝">
+            <button type="button" class="btn btn-outline btn-sm" data-lightbox data-title="Transparent Collaboration" data-desc="Honest estimates, clear terms of engagement, and dependable guarantees designed for long-term customer trust." data-icon="collaboration">
               Read Policy Overview
             </button>
           </div>
@@ -430,7 +460,16 @@
 
       <div class="grid grid-2">
         <div class="why-card">
-          <div class="why-icon-box">🏆</div>
+          <div class="why-icon-box icon-box-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.45 1-1 1H7.5"></path>
+              <path d="M14 14.66V17c0 .55.45 1 1 1h1.5"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
+            </svg>
+          </div>
           <div class="why-body">
             <h4>Proven Expertise &amp; Craft</h4>
             <p>
@@ -440,7 +479,12 @@
         </div>
 
         <div class="why-card">
-          <div class="why-icon-box">🔒</div>
+          <div class="why-icon-box icon-box-emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
           <div class="why-body">
             <h4>Integrity &amp; Privacy First</h4>
             <p>
@@ -450,7 +494,11 @@
         </div>
 
         <div class="why-card">
-          <div class="why-icon-box">💬</div>
+          <div class="why-icon-box icon-box-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
           <div class="why-body">
             <h4>Attentive, Personal Communication</h4>
             <p>
@@ -460,7 +508,14 @@
         </div>
 
         <div class="why-card">
-          <div class="why-icon-box">🚀</div>
+          <div class="why-icon-box icon-box-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+              <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+              <path d="M9 12H4s.55-3.03 2-4.5c1.62-1.63 5-2 5-2"></path>
+              <path d="M12 15v5s3.03-.55 4.5-2c1.63-1.62 2-5 2-5"></path>
+            </svg>
+          </div>
           <div class="why-body">
             <h4>Future-Proof &amp; Adaptable</h4>
             <p>
@@ -491,7 +546,13 @@
         <div class="action-card">
           <div>
             <div class="action-card-header">
-              <div class="action-card-icon">📂</div>
+              <div class="action-card-icon icon-box-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+              </div>
               <h3 class="action-card-title">Explore Showcase</h3>
             </div>
             <p class="action-card-desc">
@@ -505,7 +566,12 @@
         <div class="action-card">
           <div>
             <div class="action-card-header">
-              <div class="action-card-icon">⚙️</div>
+              <div class="action-card-icon icon-box-cyan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+              </div>
               <h3 class="action-card-title">Review Features</h3>
             </div>
             <p class="action-card-desc">
@@ -519,7 +585,11 @@
         <div class="action-card">
           <div>
             <div class="action-card-header">
-              <div class="action-card-icon">⭐</div>
+              <div class="action-card-icon icon-box-amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
               <h3 class="action-card-title">Read Reviews</h3>
             </div>
             <p class="action-card-desc">
@@ -533,7 +603,18 @@
         <div class="action-card">
           <div>
             <div class="action-card-header">
-              <div class="action-card-icon">🏛️</div>
+              <div class="action-card-icon icon-box-rose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 21h18"></path>
+                  <path d="M4 18h16"></path>
+                  <path d="M4 7h16"></path>
+                  <path d="M12 2 20 7H4z"></path>
+                  <path d="M6 18V7"></path>
+                  <path d="M10 18V7"></path>
+                  <path d="M14 18V7"></path>
+                  <path d="M18 18V7"></path>
+                </svg>
+              </div>
               <h3 class="action-card-title">Our Story &amp; Team</h3>
             </div>
             <p class="action-card-desc">
@@ -547,7 +628,12 @@
         <div class="action-card">
           <div>
             <div class="action-card-header">
-              <div class="action-card-icon">✉️</div>
+              <div class="action-card-icon icon-box-emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
               <h3 class="action-card-title">Inquire &amp; Book</h3>
             </div>
             <p class="action-card-desc">
@@ -561,7 +647,13 @@
         <div class="action-card" style="border-color: rgba(168, 85, 247, 0.4); background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.08));">
           <div>
             <div class="action-card-header">
-              <div class="action-card-icon" style="background: rgba(168, 85, 247, 0.2); color: #c084fc;">🔑</div>
+              <div class="action-card-icon icon-box-purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
+                  <path d="m21 2-9.6 9.6"></path>
+                  <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                </svg>
+              </div>
               <h3 class="action-card-title">Existing Account Access</h3>
             </div>
             <p class="action-card-desc">
@@ -570,7 +662,13 @@
           </div>
           <!-- Secondary Sign In Button: text specifically "Sign in" -->
           <a href="contact.html" class="btn-signin-secondary" style="width: 100%; justify-content: center;">
-            <span class="portal-icon">🔑</span>
+            <span class="portal-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
+                <path d="m21 2-9.6 9.6"></path>
+                <circle cx="7.5" cy="15.5" r="5.5"></circle>
+              </svg>
+            </span>
             <span>Sign in</span>
             <span class="portal-arrow">&rarr;</span>
           </a>
@@ -593,7 +691,13 @@
           <a href="contact.html" class="btn btn-primary btn-lg">Contact Us Today</a>
           <!-- Secondary Sign in option in CTA -->
           <a href="contact.html" class="btn-signin-secondary" style="background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.35);">
-            <span class="portal-icon">🔑</span>
+            <span class="portal-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
+                <path d="m21 2-9.6 9.6"></path>
+                <circle cx="7.5" cy="15.5" r="5.5"></circle>
+              </svg>
+            </span>
             <span>Sign in</span>
             <span class="portal-arrow">&rarr;</span>
           </a>
@@ -609,7 +713,14 @@
     <div class="lightbox-dialog">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close dialog">&times;</button>
       <div class="lightbox-content">
-        <div class="lightbox-icon" id="lightbox-icon">📊</div>
+        <div class="lightbox-icon" id="lightbox-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+            <path d="M4 20h16"></path>
+          </svg>
+        </div>
         <h3 class="lightbox-title" id="lightbox-title">Feature Preview</h3>
         <p class="lightbox-caption" id="lightbox-caption">Detailed specifications and interactive documentation view.</p>
         <div class="lightbox-actions" style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
