@@ -158,7 +158,7 @@ export const PRODUCTS: Product[] = [
       composition: '100% Vegetable-Tanned Bullhide (1.4mm gauge); Cupro Cuprammonium lining',
       weight: '1200 GSM Heavy Armored Hide',
       weave: 'Hand-burnished wax finish, saddle-stitched edges',
-      origin: 'Tuscany, Italy / Assembled in Sarvatt Atelier',
+      origin: 'Tuscany, Italy / Assembled in Template Atelier',
     },
     craftDetails: {
       artisanHours: 58,
