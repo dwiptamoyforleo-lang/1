@@ -40,7 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Top Banner Notice */}
       <div className="bg-[#121016] text-[#c9a84c] text-[11px] tracking-[0.2em] uppercase py-1.5 px-4 text-center border-b border-white/[0.05] flex items-center justify-center gap-3">
         <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse"></span>
-        <span>Maison Sarvatt — Complimentary Bespoke White-Glove Global Delivery on all Editions</span>
+        <span>Studio Template — Complimentary Bespoke White-Glove Global Delivery on all Editions</span>
         <span className="hidden md:inline text-white/40">|</span>
         <button 
           onClick={onOpenBespoke}
@@ -77,10 +77,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <div className="flex items-baseline gap-2">
               <span className="font-display-luxury text-2xl sm:text-3xl font-bold tracking-[0.25em] text-[#f4efe6] group-hover:text-[#c9a84c] transition-colors">
-                SARVATT
+                TEMPLATE
               </span>
               <span className="text-[#c9a84c] text-xs font-serif italic tracking-widest hidden sm:inline">
-                सर्वत्
+                Template
               </span>
             </div>
             <p className="text-[9px] tracking-[0.35em] text-white/40 uppercase">
