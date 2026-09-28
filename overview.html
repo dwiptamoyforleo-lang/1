@@ -18,6 +18,14 @@
 
   <link rel="stylesheet" href="style.css">
 
+  <!-- Centralized Authentication Guard (Synchronous Anti-Flicker Protection) -->
+  <style id="auth-guard-style">
+    html { visibility: hidden !important; opacity: 0 !important; }
+  </style>
+  <script src="auth-config.js"></script>
+  <script src="auth.js"></script>
+  <script src="auth-guard.js"></script>
+
   <!-- Immediate Theme Initializer to Prevent Flash of Wrong Theme -->
   <script>
     (function() {
@@ -85,8 +93,13 @@
           </div>
         </div>
 
-        <!-- Existing Standard Sign In Button (Kept 100% Unchanged) -->
-        <a href="contact.html" class="btn btn-outline btn-sm hide-on-mobile">Sign In</a>
+        <div class="auth-user-bar" id="auth-user-bar">
+          <span class="user-greeting" id="user-greeting" title="Active session"></span>
+          <button type="button" class="btn btn-outline btn-sm btn-logout" id="btn-logout" title="Sign out of your account" aria-label="Sign out">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Logout</span>
+          </button>
+        </div>
         <!-- Get Started Button -->
         <a href="overview.html" class="btn btn-primary btn-sm">Get Started</a>
 
@@ -110,6 +123,10 @@
       </nav>
       <div class="mobile-nav-cta">
         <a href="overview.html" class="btn btn-primary" style="width: 100%; text-align: center;">Get Started</a>
+        <button type="button" class="btn-mobile-logout" id="btn-mobile-logout" style="margin-top: 0.75rem;" aria-label="Sign out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Log out</span>
+        </button>
       </div>
     </div>
   </header>
@@ -129,26 +146,17 @@
         Your unified orientation to everything our brand provides. Explore what we offer, discover key highlights, review visitor information, and learn what you can do across our platform.
       </p>
 
-      <!-- SECONDARY "SIGN IN" PORTAL BANNER -->
-      <!-- Distinct font, vibrant color scheme, pill geometry, and micro-interactions -->
-      <div class="signin-portal-banner">
+      <!-- VERIFIED MEMBER SESSION BANNER -->
+      <div class="signin-portal-banner" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(99, 102, 241, 0.08)); border-color: rgba(16, 185, 129, 0.25);">
         <div class="signin-portal-info">
-          <span class="signin-portal-badge">Existing Client / Member</span>
+          <span class="signin-portal-badge" style="background-color: rgba(16, 185, 129, 0.2); color: #10b981; border-color: rgba(16, 185, 129, 0.35);">Verified Session Active</span>
           <p class="signin-portal-message">
-            Already have an active account, reservation, or project with us? Access your records directly:
+            You are signed in with verified access. All documentation, features, specifications, and showcases are unlocked.
           </p>
         </div>
-        <!-- Secondary Sign In Button: Text specifically "Sign in", distinct typography and styling -->
-        <a href="contact.html" class="btn-signin-secondary" title="Access your existing account">
-          <span class="portal-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
-              <path d="m21 2-9.6 9.6"></path>
-              <circle cx="7.5" cy="15.5" r="5.5"></circle>
-            </svg>
-          </span>
-          <span>Sign in</span>
-          <span class="portal-arrow">&rarr;</span>
+        <a href="showcase.html" class="btn btn-outline btn-sm" style="border-color: var(--border-color); color: var(--text-primary); text-decoration: none; padding: 0.5rem 1rem;">
+          <span>Explore Projects</span>
+          <span style="margin-left: 0.35rem;">&rarr;</span>
         </a>
       </div>
 
@@ -643,35 +651,27 @@
           <a href="contact.html" class="action-card-link">Open Contact Form &rarr;</a>
         </div>
 
-        <!-- Action 6: Account Access / Sign In -->
+        <!-- Action 6: Account & Session -->
         <div class="action-card" style="border-color: rgba(168, 85, 247, 0.4); background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.08));">
           <div>
             <div class="action-card-header">
               <div class="action-card-icon icon-box-purple">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
-                  <path d="m21 2-9.6 9.6"></path>
-                  <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
                 </svg>
               </div>
-              <h3 class="action-card-title">Existing Account Access</h3>
+              <h3 class="action-card-title">Account &amp; Session</h3>
             </div>
             <p class="action-card-desc">
-              Returning user or registered client? Use our secondary sign-in portal to access your account or reservation history.
+              Manage your active verified session or sign out securely when you are finished using your account.
             </p>
           </div>
-          <!-- Secondary Sign In Button: text specifically "Sign in" -->
-          <a href="contact.html" class="btn-signin-secondary" style="width: 100%; justify-content: center;">
-            <span class="portal-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
-                <path d="m21 2-9.6 9.6"></path>
-                <circle cx="7.5" cy="15.5" r="5.5"></circle>
-              </svg>
-            </span>
-            <span>Sign in</span>
-            <span class="portal-arrow">&rarr;</span>
-          </a>
+          <button type="button" class="btn btn-outline btn-sm btn-logout" style="width: 100%; justify-content: center; min-height: 42px;" onclick="window.AuthManager &amp;&amp; window.AuthManager.logout();">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Log out</span>
+          </button>
         </div>
       </div>
     </div>
@@ -689,18 +689,7 @@
         </p>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center; margin-top: 1rem;">
           <a href="contact.html" class="btn btn-primary btn-lg">Contact Us Today</a>
-          <!-- Secondary Sign in option in CTA -->
-          <a href="contact.html" class="btn-signin-secondary" style="background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.35);">
-            <span class="portal-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"></path>
-                <path d="m21 2-9.6 9.6"></path>
-                <circle cx="7.5" cy="15.5" r="5.5"></circle>
-              </svg>
-            </span>
-            <span>Sign in</span>
-            <span class="portal-arrow">&rarr;</span>
-          </a>
+          <a href="features.html" class="btn btn-outline btn-lg" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.35); color: #fff;">Explore Features &rarr;</a>
         </div>
       </div>
     </div>

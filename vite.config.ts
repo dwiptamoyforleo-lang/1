@@ -18,6 +18,7 @@ export default defineConfig({
         testimonials: resolve(__dirname, 'testimonials.html'),
         contact: resolve(__dirname, 'contact.html'),
         overview: resolve(__dirname, 'overview.html'),
+        auth: resolve(__dirname, 'auth.html'),
       },
     },
   },
