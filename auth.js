@@ -215,7 +215,8 @@
               self.handleGoogleCredentialResponse(response, options);
             },
             auto_select: false,
-            cancel_on_tap_outside: true
+            cancel_on_tap_outside: true,
+            use_fedcm_for_prompt: false
           });
 
           // Render official Google button into container if present
@@ -287,7 +288,7 @@
       };
 
       // Calculate token lifetime or use standard
-      let durationMs = self.config ? self.config.sessionDurationMs : null;
+      let durationMs = this.config ? this.config.sessionDurationMs : null;
       if (payload.exp) {
         const tokenRemainingMs = (payload.exp * 1000) - Date.now();
         if (tokenRemainingMs > 0 && tokenRemainingMs < (durationMs || Infinity)) {
@@ -306,11 +307,90 @@
     },
 
     /**
-     * Triggers Google Sign-In Prompt manually if button container is clicked directly
+     * Processes Google OAuth2 Token Client response
      */
-    triggerGooglePrompt: function () {
-      if (window.google && window.google.accounts && window.google.accounts.id) {
-        window.google.accounts.id.prompt();
+    handleGoogleTokenResponse: function (tokenResponse, options) {
+      options = options || {};
+      const self = this;
+      const accessToken = tokenResponse.access_token;
+
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: 'Bearer ' + accessToken }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Failed to retrieve verified Google profile.');
+          return res.json();
+        })
+        .then(function (profile) {
+          const user = {
+            id: profile.sub,
+            email: profile.email || 'user@gmail.com',
+            name: profile.name || (profile.email ? profile.email.split('@')[0] : 'Google User'),
+            picture: profile.picture || '',
+            verified: Boolean(profile.email_verified),
+            provider: 'google'
+          };
+          const durationMs = tokenResponse.expires_in ? (Number(tokenResponse.expires_in) * 1000) : null;
+          self.saveSession(user, 'google', accessToken, durationMs);
+
+          if (options.onSuccess) {
+            options.onSuccess(user);
+          } else {
+            const target = self.getRedirectTarget();
+            window.location.replace(target);
+          }
+        })
+        .catch(function (err) {
+          if (options.onError) {
+            options.onError(err);
+          }
+        });
+    },
+
+    /**
+     * Triggers Google Sign-In Prompt or Token Client popup manually
+     */
+    triggerGooglePrompt: function (options) {
+      options = options || {};
+      const self = this;
+
+      if (!window.google || !window.google.accounts) {
+        if (options.onError) {
+          options.onError(new Error('Google Identity Services SDK is loading. Please try again.'));
+        }
+        return;
+      }
+
+      // Check if OAuth2 token client can be used for seamless popup authentication
+      if (window.google.accounts.oauth2 && typeof window.google.accounts.oauth2.initTokenClient === 'function') {
+        try {
+          const client = window.google.accounts.oauth2.initTokenClient({
+            client_id: self.config.googleClientId,
+            scope: 'email profile openid',
+            callback: function (tokenResponse) {
+              if (tokenResponse && tokenResponse.access_token) {
+                self.handleGoogleTokenResponse(tokenResponse, options);
+              } else if (tokenResponse && tokenResponse.error) {
+                if (options.onError) options.onError(new Error(tokenResponse.error_description || tokenResponse.error));
+              }
+            },
+            error_callback: function (err) {
+              if (options.onError) options.onError(new Error(err && err.message ? err.message : 'Google sign-in popup was cancelled.'));
+            }
+          });
+          client.requestAccessToken({ prompt: 'select_account' });
+          return;
+        } catch (e) {
+          console.warn('OAuth2 token client init failed, attempting GIS prompt fallback:', e);
+        }
+      }
+
+      if (window.google.accounts.id) {
+        window.google.accounts.id.prompt(function (notification) {
+          if (notification.isNotDisplayed()) {
+            console.log('Google prompt not displayed:', notification.getNotDisplayedReason());
+          }
+        });
       }
     },
 

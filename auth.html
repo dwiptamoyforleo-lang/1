@@ -188,7 +188,18 @@
         googleBtn.addEventListener('click', function() {
           hideAlert();
           googleBtn.classList.add('loading');
-          window.AuthManager.triggerGooglePrompt();
+          window.AuthManager.triggerGooglePrompt({
+            onSuccess: function(user) {
+              showAlert('success', 'Authenticated with Google. Loading portal...');
+              setTimeout(function() {
+                window.location.replace(window.AuthManager.getRedirectTarget());
+              }, 300);
+            },
+            onError: function(err) {
+              googleBtn.classList.remove('loading');
+              showAlert('error', err.message || 'Google authentication could not be completed.');
+            }
+          });
           // Reset loading state after a brief interval if popup is cancelled
           setTimeout(function() {
             googleBtn.classList.remove('loading');
