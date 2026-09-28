@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFilterBar();
   initDynamicYear();
   initScrollReveal();
-  initScrollProgressBar();
 });
 
 /* ==========================================================================
@@ -394,47 +393,10 @@ function initScrollReveal() {
 }
 
 /* ==========================================================================
-   11. SCROLL PROGRESS BAR
+   11. SCROLL UTILITIES
    ========================================================================== */
 function initScrollProgressBar() {
-  let progressContainer = document.querySelector('.scroll-progress-container');
-  let progressBar = document.querySelector('.scroll-progress-bar');
-
-  // If not already in DOM, create it dynamically
-  if (!progressContainer) {
-    progressContainer = document.createElement('div');
-    progressContainer.className = 'scroll-progress-container';
-    progressContainer.setAttribute('aria-hidden', 'true');
-    progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress-bar';
-    progressBar.id = 'scroll-progress-bar';
-    progressContainer.appendChild(progressBar);
-    document.body.prepend(progressContainer);
-  } else if (!progressBar) {
-    progressBar = progressContainer.querySelector('.scroll-progress-bar');
-  }
-
-  let ticking = false;
-
-  const updateProgress = () => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    const clampedProgress = Math.min(100, Math.max(0, progress));
-    if (progressBar) {
-      progressBar.style.width = `${clampedProgress}%`;
-    }
-    ticking = false;
-  };
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateProgress);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  window.addEventListener('resize', updateProgress, { passive: true });
-  updateProgress();
+  // Scroll progress bar disabled to remove scroll coloring completely
 }
+
 

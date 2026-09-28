@@ -13,8 +13,8 @@
     var path = window.location.pathname;
     var filename = path.split('/').pop() || 'index.html';
 
-    // If somehow on auth.html, do nothing
-    if (filename === 'auth.html') {
+    // If somehow on auth page, do nothing
+    if (filename === 'auth.html' || path.endsWith('/auth.html') || path.endsWith('/auth')) {
       return;
     }
 
