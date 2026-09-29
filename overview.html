@@ -88,13 +88,17 @@
           </div>
         </div>
 
-        <div class="auth-user-bar" id="auth-user-bar">
+        <div class="auth-user-bar" id="auth-user-bar" style="display: none;">
           <span class="user-greeting" id="user-greeting" title="Active session"></span>
           <button type="button" class="btn btn-outline btn-sm btn-logout" id="btn-logout" title="Sign out of your account" aria-label="Sign out">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             <span>Logout</span>
           </button>
         </div>
+        <a href="signin.html" class="btn btn-header-signin" id="btn-header-signin" aria-label="Sign In to Member Portal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+          <span>Sign In</span>
+        </a>
         <!-- Get Started Button -->
         <a href="overview.html" class="btn btn-primary btn-sm">Get Started</a>
 
@@ -118,7 +122,11 @@
       </nav>
       <div class="mobile-nav-cta">
         <a href="overview.html" class="btn btn-primary" style="width: 100%; text-align: center;">Get Started</a>
-        <button type="button" class="btn-mobile-logout" id="btn-mobile-logout" style="margin-top: 0.75rem;" aria-label="Sign out">
+        <a href="signin.html" class="btn btn-mobile-signin" id="btn-mobile-signin" style="margin-top: 0.75rem;" aria-label="Sign In to Member Portal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+          <span>Sign In</span>
+        </a>
+        <button type="button" class="btn-mobile-logout" id="btn-mobile-logout" style="margin-top: 0.75rem; display: none;" aria-label="Sign out">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
           <span>Log out</span>
         </button>
@@ -663,10 +671,18 @@
               Manage your active verified session or sign out securely when you are finished using your account.
             </p>
           </div>
-          <button type="button" class="btn btn-outline btn-sm btn-logout" style="width: 100%; justify-content: center; min-height: 42px;" onclick="window.AuthManager &amp;&amp; window.AuthManager.logout();">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            <span>Log out</span>
-          </button>
+          <div id="overview-auth-action-guest">
+            <a href="signin.html" class="btn btn-primary btn-sm" style="width: 100%; justify-content: center; min-height: 42px; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              <span>Sign In to Member Portal</span>
+            </a>
+          </div>
+          <div id="overview-auth-action-member" style="display: none;">
+            <button type="button" class="btn btn-outline btn-sm btn-logout" style="width: 100%; justify-content: center; min-height: 42px;" onclick="window.AuthManager &amp;&amp; window.AuthManager.logout();">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Log out</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,8 @@
     SESSION: 'brandname_auth_session',
     USER: 'brandname_auth_user',
     PROVIDER: 'brandname_auth_provider',
-    TOKEN: 'brandname_auth_token'
+    TOKEN: 'brandname_auth_token',
+    GUEST: 'brandname_guest_access'
   };
 
   /**
@@ -146,7 +147,41 @@
     },
 
     /**
-     * Signs out the user, invalidates provider state, and redirects to auth.html.
+     * Enables guest access mode so visitors can explore the website without signing in.
+     */
+    enableGuestAccess: function () {
+      try {
+        localStorage.setItem(STORAGE_KEYS.GUEST, 'true');
+      } catch (e) {
+        console.error('Failed to enable guest access:', e);
+      }
+    },
+
+    /**
+     * Checks if the current visitor is browsing in guest access mode.
+     * @returns {boolean}
+     */
+    isGuest: function () {
+      try {
+        return localStorage.getItem(STORAGE_KEYS.GUEST) === 'true';
+      } catch (e) {
+        return false;
+      }
+    },
+
+    /**
+     * Clears guest access mode.
+     */
+    clearGuestAccess: function () {
+      try {
+        localStorage.removeItem(STORAGE_KEYS.GUEST);
+      } catch (e) {
+        console.error('Error clearing guest access:', e);
+      }
+    },
+
+    /**
+     * Signs out the user, invalidates provider state, clears guest access, and redirects to auth.html.
      */
     logout: function () {
       // If Google Identity Services autoSelect was active, disable it
@@ -159,6 +194,7 @@
       }
 
       this.clearSession();
+      this.clearGuestAccess();
 
       // Prevent back button recovery by replacing history entry
       window.location.replace('auth.html');
@@ -177,6 +213,7 @@
           // Prevent redirect loops or open redirects
           if (
             redirect.startsWith('auth.html') ||
+            redirect.startsWith('signin.html') ||
             redirect.startsWith('http://') ||
             redirect.startsWith('https://') ||
             redirect.startsWith('//')
@@ -504,42 +541,71 @@
     },
 
     /**
-     * Binds user info & logout button on protected pages.
+     * Binds user info & logout button on protected pages, or shows Sign In button if guest.
      */
     bindProtectedPageUI: function () {
       const user = this.getUser();
-      if (!user) return;
+      const isAuth = this.isAuthenticated();
 
-      // 1. Update user greeting/name in header if element exists
-      const userGreeting = document.getElementById('user-greeting');
-      if (userGreeting) {
-        userGreeting.textContent = user.name || user.email || 'Member';
-        userGreeting.title = 'Signed in as ' + (user.email || user.name);
-      }
-
-      // 2. Update user avatar initial if present
-      const userAvatar = document.getElementById('user-avatar');
-      if (userAvatar) {
-        const initial = (user.name || user.email || 'M').charAt(0).toUpperCase();
-        userAvatar.textContent = initial;
-      }
-
-      // 3. Bind header logout button
-      const logoutBtn = document.getElementById('btn-logout');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          AuthManager.logout();
-        });
-      }
-
-      // 4. Bind mobile nav logout button if present
+      const userBar = document.getElementById('auth-user-bar');
+      const headerSignInBtn = document.getElementById('btn-header-signin');
+      const mobileSignInBtn = document.getElementById('btn-mobile-signin');
       const mobileLogoutBtn = document.getElementById('btn-mobile-logout');
-      if (mobileLogoutBtn) {
-        mobileLogoutBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          AuthManager.logout();
-        });
+
+      if (isAuth && user) {
+        // Authenticated member mode
+        if (userBar) userBar.style.display = 'inline-flex';
+        if (headerSignInBtn) headerSignInBtn.style.display = 'none';
+        if (mobileSignInBtn) mobileSignInBtn.style.display = 'none';
+        if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'flex';
+
+        // 1. Update user greeting/name in header if element exists
+        const userGreeting = document.getElementById('user-greeting');
+        if (userGreeting) {
+          userGreeting.textContent = user.name || user.email || 'Member';
+          userGreeting.title = 'Signed in as ' + (user.email || user.name);
+        }
+
+        // 2. Update user avatar initial if present
+        const userAvatar = document.getElementById('user-avatar');
+        if (userAvatar) {
+          const initial = (user.name || user.email || 'M').charAt(0).toUpperCase();
+          userAvatar.textContent = initial;
+        }
+
+        // 3. Bind header logout button
+        const logoutBtn = document.getElementById('btn-logout');
+        if (logoutBtn && !logoutBtn.dataset.bound) {
+          logoutBtn.dataset.bound = 'true';
+          logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            AuthManager.logout();
+          });
+        }
+
+        // 4. Bind mobile nav logout button if present
+        if (mobileLogoutBtn && !mobileLogoutBtn.dataset.bound) {
+          mobileLogoutBtn.dataset.bound = 'true';
+          mobileLogoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            AuthManager.logout();
+          });
+        }
+        const ovGuest = document.getElementById('overview-auth-action-guest');
+        const ovMember = document.getElementById('overview-auth-action-member');
+        if (ovGuest) ovGuest.style.display = 'none';
+        if (ovMember) ovMember.style.display = 'block';
+      } else {
+        // Guest mode / unauthenticated browsing
+        if (userBar) userBar.style.display = 'none';
+        if (headerSignInBtn) headerSignInBtn.style.display = 'inline-flex';
+        if (mobileSignInBtn) mobileSignInBtn.style.display = 'flex';
+        if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'none';
+
+        const ovGuest = document.getElementById('overview-auth-action-guest');
+        const ovMember = document.getElementById('overview-auth-action-member');
+        if (ovGuest) ovGuest.style.display = 'block';
+        if (ovMember) ovMember.style.display = 'none';
       }
     }
   };
@@ -547,18 +613,22 @@
   // Cross-Tab Session Synchronization
   window.addEventListener('storage', function (event) {
     if (event.key === STORAGE_KEYS.SESSION && !event.newValue) {
-      // Session was cleared in another tab: log out this tab immediately
-      const isAuthPage = window.location.pathname.endsWith('auth.html');
-      if (!isAuthPage) {
-        window.location.replace('auth.html');
+      // Session was cleared in another tab
+      const isAuthOrSignIn = window.location.pathname.endsWith('auth.html') || window.location.pathname.endsWith('signin.html');
+      if (!isAuthOrSignIn) {
+        if (!AuthManager.isGuest()) {
+          window.location.replace('auth.html');
+        } else {
+          AuthManager.bindProtectedPageUI();
+        }
       }
     }
   });
 
   // Anti-Back-Navigation & Page Restoration Guard
   window.addEventListener('pageshow', function (event) {
-    const isAuthPage = window.location.pathname.endsWith('auth.html');
-    if (!isAuthPage && !AuthManager.isAuthenticated()) {
+    const isAuthOrSignIn = window.location.pathname.endsWith('auth.html') || window.location.pathname.endsWith('signin.html');
+    if (!isAuthOrSignIn && !AuthManager.isAuthenticated() && !AuthManager.isGuest()) {
       window.location.replace('auth.html');
     }
   });

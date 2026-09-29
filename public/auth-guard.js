@@ -1,7 +1,7 @@
 /**
  * Synchronous Authentication Protection Guard
  * Loaded in the <head> of every protected HTML page.
- * Enforces immediate redirect to auth.html if the user is unauthenticated.
+ * Enforces immediate redirect to auth.html if the user is unauthenticated and hasn't chosen guest access.
  * Works in tandem with <style id="auth-guard-style"> to prevent any flash of protected content.
  */
 
@@ -13,12 +13,17 @@
     var path = window.location.pathname;
     var filename = path.split('/').pop() || 'index.html';
 
-    // If somehow on auth page, do nothing
-    if (filename === 'auth.html' || path.endsWith('/auth.html') || path.endsWith('/auth')) {
+    // If on auth.html or signin.html, do nothing
+    if (
+      filename === 'auth.html' || path.endsWith('/auth.html') || path.endsWith('/auth') ||
+      filename === 'signin.html' || path.endsWith('/signin.html') || path.endsWith('/signin')
+    ) {
       return;
     }
 
     var isAuth = false;
+    var isGuest = false;
+
     try {
       if (window.AuthManager && typeof window.AuthManager.isAuthenticated === 'function') {
         isAuth = window.AuthManager.isAuthenticated();
@@ -37,12 +42,22 @@
       isAuth = false;
     }
 
-    if (!isAuth) {
-      // User is not authenticated: immediately redirect before body renders
+    try {
+      if (window.AuthManager && typeof window.AuthManager.isGuest === 'function') {
+        isGuest = window.AuthManager.isGuest();
+      } else {
+        isGuest = localStorage.getItem('brandname_guest_access') === 'true';
+      }
+    } catch (e) {
+      isGuest = false;
+    }
+
+    if (!isAuth && !isGuest) {
+      // User is neither authenticated nor in guest mode: redirect to auth.html
       var target = encodeURIComponent(filename + window.location.search + window.location.hash);
       window.location.replace('auth.html?redirect=' + target);
     } else {
-      // User is authenticated: reveal document immediately
+      // User has access (either authenticated or guest): reveal document immediately
       var guardStyle = document.getElementById('auth-guard-style');
       if (guardStyle && guardStyle.parentNode) {
         guardStyle.parentNode.removeChild(guardStyle);
@@ -58,8 +73,14 @@
 
   // Guard against browser history back/forward caching (BFCache)
   window.addEventListener('pageshow', function (event) {
+    var path = window.location.pathname;
+    var filename = path.split('/').pop() || 'index.html';
+    if (filename === 'auth.html' || filename === 'signin.html') {
+      return;
+    }
     var rawSession = localStorage.getItem('brandname_auth_session');
-    if (!rawSession) {
+    var isGuest = localStorage.getItem('brandname_guest_access') === 'true';
+    if (!rawSession && !isGuest) {
       window.location.replace('auth.html');
     }
   });

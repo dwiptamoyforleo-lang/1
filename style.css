@@ -3029,11 +3029,45 @@ button {
   margin: 0;
 }
 
-/* Header User Menu & Logout Button on Protected Pages */
+/* Header User Menu, Sign In & Logout Buttons */
 .auth-user-bar {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
+}
+
+.btn-header-signin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 0.85rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text-primary);
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.btn-header-signin:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-header-signin svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.btn-header-signin:hover svg {
+  transform: translateX(2px);
 }
 
 .user-greeting {
@@ -3102,6 +3136,31 @@ button {
   font-size: 0.8rem;
 }
 
+.btn-mobile-signin {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: var(--bg-surface-elevated, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.btn-mobile-signin:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
 .btn-mobile-logout {
   width: 100%;
   display: flex;
@@ -3123,4 +3182,77 @@ button {
     display: none;
   }
 }
+
+/* Auth Top Navigation - Continue as a guest Button */
+.auth-top-nav {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+.btn-skip-to-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.25rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 9999px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.btn-skip-to-site span {
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+}
+
+.btn-skip-to-site:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.35);
+}
+
+.btn-skip-to-site:active {
+  transform: translateY(0);
+}
+
+.btn-skip-to-site svg {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  color: #ffffff;
+}
+
+.btn-skip-to-site:hover svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  .auth-top-nav {
+    top: 0.85rem;
+    right: 0.85rem;
+  }
+  .btn-skip-to-site {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+    gap: 0.4rem;
+  }
+}
+
 
