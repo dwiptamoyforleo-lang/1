@@ -602,6 +602,12 @@
         if (mobileSignInBtn) mobileSignInBtn.style.display = 'flex';
         if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'none';
 
+        // Dynamically append current page redirect to sign-in buttons
+        const currentFilename = window.location.pathname.split('/').pop() || 'index.html';
+        const signInUrl = 'auth.html?redirect=' + encodeURIComponent(currentFilename + window.location.search + window.location.hash);
+        if (headerSignInBtn) headerSignInBtn.href = signInUrl;
+        if (mobileSignInBtn) mobileSignInBtn.href = signInUrl;
+
         const ovGuest = document.getElementById('overview-auth-action-guest');
         const ovMember = document.getElementById('overview-auth-action-member');
         if (ovGuest) ovGuest.style.display = 'block';

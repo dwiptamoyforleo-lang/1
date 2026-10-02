@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Member Portal Sign In - BrandName</title>
-  <meta name="description" content="Sign in to the BrandName Member Hub for synchronized cloud settings and priority features.">
+  <title>Sign In - BrandName</title>
+  <meta name="description" content="Sign in to your BrandName account using Google or Apple.">
 
   <!-- Google Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./style.css">
 
-  <!-- Self-Contained Styles for the Member Portal Sign In GUI (Different from Main Auth GUI) -->
+  <!-- Self-Contained Unified Styles for Desktop, Laptop & Mobile (Immune to GitHub Pages subpath/asset issues) -->
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -29,286 +29,392 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      background-color: #080c16;
-      color: #f8fafc;
     }
 
-    /* Executive Dual-Pane Workspace Layout */
-    body.signin-gui-body {
+    /* Full Viewport Responsive Flex Container */
+    body.auth-page-body {
       margin: 0;
-      padding: 2rem 1.25rem;
+      padding: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(14, 165, 233, 0.15), transparent 60%),
-        radial-gradient(ellipse 70% 60% at 90% 80%, rgba(139, 92, 246, 0.18), transparent 60%),
-        linear-gradient(180deg, #070a12 0%, #0c111d 100%);
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      background-color: #06080e;
+      color: #f8fafc;
       position: relative;
       overflow-x: hidden;
+      box-sizing: border-box;
     }
 
-    /* Subtle subtle technical grid background */
-    .signin-grid-overlay {
+    /* 
+     * HARDWARE-ACCELERATED ANIMATED GRADIENT (SILKY 60FPS / 120HZ ON MOBILE)
+     * Animates ONLY GPU-composited transform properties (translate3d & scale).
+     * Never triggers repaint or reflow, ensuring zero lag or battery drain on mobile.
+     */
+    .aurora-ambient-wrap {
       position: fixed;
-      inset: 0;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 36px 36px;
+      inset: -20px;
+      width: calc(100% + 40px);
+      height: calc(100% + 40px);
+      overflow: hidden;
       pointer-events: none;
       z-index: 0;
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 80%);
+      contain: strict;
+      transform: translate3d(0, 0, 0);
     }
 
-    /* Top Breadcrumb Navigation */
-    .signin-top-nav {
-      position: fixed;
-      top: 1.25rem;
-      left: 1.5rem;
-      z-index: 50;
+    .aurora-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(65px);
+      -webkit-filter: blur(65px);
+      opacity: 0.62;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      mix-blend-mode: screen;
+    }
+
+    .orb-1 {
+      top: -10%;
+      left: 15%;
+      width: min(520px, 85vw);
+      height: min(480px, 85vw);
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.48) 0%, rgba(79, 70, 229, 0.22) 55%, transparent 75%);
+      animation: auroraFloat1 20s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      bottom: -15%;
+      right: 5%;
+      width: min(500px, 80vw);
+      height: min(460px, 80vw);
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.42) 0%, rgba(147, 51, 234, 0.2) 55%, transparent 75%);
+      animation: auroraFloat2 24s ease-in-out infinite alternate;
+    }
+
+    .orb-3 {
+      top: 35%;
+      left: -8%;
+      width: min(450px, 75vw);
+      height: min(430px, 75vw);
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.38) 0%, rgba(37, 99, 235, 0.18) 55%, transparent 75%);
+      animation: auroraFloat3 22s ease-in-out infinite alternate;
+    }
+
+    .orb-4 {
+      bottom: -10%;
+      left: 25%;
+      width: min(440px, 75vw);
+      height: min(410px, 75vw);
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, rgba(219, 39, 119, 0.14) 55%, transparent 75%);
+      animation: auroraFloat4 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes auroraFloat1 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(55px, 45px, 0) scale(1.12); }
+      100% { transform: translate3d(-35px, 75px, 0) scale(0.96); }
+    }
+
+    @keyframes auroraFloat2 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(-65px, -45px, 0) scale(1.14); }
+      100% { transform: translate3d(30px, -70px, 0) scale(0.94); }
+    }
+
+    @keyframes auroraFloat3 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(45px, -55px, 0) scale(1.08); }
+      100% { transform: translate3d(-25px, 35px, 0) scale(0.96); }
+    }
+
+    @keyframes auroraFloat4 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(-50px, -35px, 0) scale(1.1); }
+      100% { transform: translate3d(45px, -25px, 0) scale(0.95); }
+    }
+
+    /* Mobile optimization: lower blur cost for ultra-smooth 60fps / 120Hz */
+    @media (max-width: 768px) {
+      .aurora-orb {
+        filter: blur(42px);
+        -webkit-filter: blur(42px);
+        opacity: 0.58;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .aurora-orb {
+        animation: none !important;
+      }
+    }
+
+    /* Top Bar Navigation: Document Flow (Prevents Any Card Overlap) */
+    .auth-top-bar {
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      padding: 1.25rem 2rem;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .auth-top-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
 
-    .btn-back-to-site {
+    .auth-brand-link {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #cbd5e1;
-      font-size: 0.85rem;
-      font-weight: 600;
       text-decoration: none;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: all 0.2s ease;
-    }
-
-    .btn-back-to-site:hover {
-      background: rgba(255, 255, 255, 0.14);
       color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.3);
-      transform: translateX(-2px);
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+      user-select: none;
     }
 
-    /* Main Console Container: Split View */
-    .signin-console-wrapper {
+    .auth-brand-link:hover {
+      opacity: 0.85;
+    }
+
+    .auth-brand-symbol {
+      color: #818cf8;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    /* Bold Luminous White Button: Opposite of Black */
+    .btn-continue-guest {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 1.35rem;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      border-radius: 9999px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18), 0 0 12px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-continue-guest span {
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-continue-guest:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: #ffffff;
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.35), 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-continue-guest:active {
+      transform: translateY(0);
+    }
+
+    .btn-continue-guest svg {
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+      color: #ffffff;
+    }
+
+    .btn-continue-guest:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* Ambient atmospheric glow behind the card */
+    .auth-glow-backdrop {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(540px, 90vw);
+      height: min(540px, 90vw);
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.12) 45%, transparent 70%);
+      filter: blur(75px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main Container: Centered Alignment */
+    .auth-main-wrapper {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 960px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      border-radius: 28px;
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow:
-        0 30px 60px -15px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      max-width: 440px;
+      margin: auto !important;
+      padding: 1.5rem 1.25rem 2.5rem;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-sizing: border-box;
+      flex: 1 1 auto;
+    }
+
+    /* Glassmorphic authentication card */
+    .auth-card {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.84);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      overflow: hidden;
-      animation: consoleSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      padding: 2.75rem 2.25rem 2rem;
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 1px rgba(255, 255, 255, 0.18);
+      text-align: center;
+      box-sizing: border-box;
+      animation: authCardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes consoleSlideUp {
-      from { opacity: 0; transform: translateY(16px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes authCardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
-    /* Left Panel: Member Hub & Perks */
-    .signin-left-panel {
-      padding: 3rem 2.5rem;
-      background: linear-gradient(145deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .signin-badge-pill {
+    .auth-brand-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
-      background: rgba(14, 165, 233, 0.12);
-      border: 1px solid rgba(14, 165, 233, 0.35);
-      color: #38bdf8;
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
-      width: fit-content;
-    }
-
-    .signin-left-title {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
-      font-size: 1.85rem;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.85rem;
-    }
-
-    .signin-left-title span {
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .signin-left-desc {
-      font-size: 0.95rem;
-      color: #94a3b8;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    /* Feature Highlights */
-    .member-perks-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1.15rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .member-perk-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.85rem;
-    }
-
-    .perk-icon-wrap {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.28), rgba(168, 85, 247, 0.28));
+      border: 1px solid rgba(99, 102, 241, 0.5);
       color: #818cf8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
+      font-size: 1.65rem;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.35);
     }
 
-    .perk-text-wrap strong {
-      display: block;
-      color: #f1f5f9;
-      font-size: 0.92rem;
-      font-weight: 600;
-      margin-bottom: 0.15rem;
-    }
-
-    .perk-text-wrap span {
-      font-size: 0.82rem;
-      color: #94a3b8;
-      line-height: 1.4;
-    }
-
-    .signin-left-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 0.8rem;
-      color: #64748b;
-    }
-
-    .status-live-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      color: #34d399;
-      font-weight: 500;
-    }
-
-    .status-pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background-color: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulseLive 2s infinite;
-    }
-
-    @keyframes pulseLive {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.7; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Right Panel: Authentication Terminal */
-    .signin-right-panel {
-      padding: 3rem 2.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: rgba(15, 23, 42, 0.45);
-      text-align: center;
-    }
-
-    .auth-terminal-header {
-      margin-bottom: 1.75rem;
-      text-align: center;
-    }
-
-    .terminal-glyph {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(99, 102, 241, 0.25));
-      border: 1px solid rgba(14, 165, 233, 0.4);
-      color: #38bdf8;
-      font-size: 1.5rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .terminal-title {
+    .auth-brand-label {
       font-family: 'Space Grotesk', -apple-system, sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
     }
 
-    .terminal-subtitle {
-      font-size: 0.88rem;
+    .auth-title {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 0.4rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-subtitle {
+      font-size: 0.92rem;
       color: #94a3b8;
+      line-height: 1.5;
+      margin: 0 0 1.75rem 0;
     }
 
-    /* Provider Buttons */
-    .terminal-actions-stack {
+    /* Alert Banner */
+    .auth-alert {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+      text-align: left;
+      line-height: 1.4;
+      box-sizing: border-box;
+      animation: authAlertFade 0.2s ease-out;
+    }
+
+    @keyframes authAlertFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-alert-error {
+      background-color: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .auth-alert-success {
+      background-color: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+
+    .auth-alert-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-alert-text {
+      flex: 1 1 auto;
+    }
+
+    /* Provider Buttons Stack */
+    .auth-providers-list {
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       width: 100%;
     }
 
-    .btn-portal-provider {
+    .auth-provider-slot {
       position: relative;
       width: 100%;
-      height: 48px;
+    }
+
+    .google-btn-slot {
+      display: none;
+      width: 100%;
+      min-height: 48px;
+    }
+
+    .btn-auth-provider {
+      position: relative;
+      width: 100%;
+      height: 50px;
       border-radius: 12px;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -323,74 +429,166 @@
       border: 1px solid transparent;
     }
 
-    .btn-portal-google {
-      background-color: #ffffff;
-      color: #0f172a;
-      border-color: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    .btn-auth-provider .provider-icon {
+      flex-shrink: 0;
     }
 
-    .btn-portal-google:hover {
+    .btn-auth-provider .btn-text {
+      flex-grow: 0;
+      letter-spacing: -0.01em;
+    }
+
+    /* Google Button */
+    .btn-google {
+      background-color: #ffffff;
+      color: #1e293b;
+      border-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-google:hover {
       background-color: #f8fafc;
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
     }
 
-    .btn-portal-apple {
+    .btn-google:active {
+      transform: translateY(0);
+    }
+
+    /* Apple Button */
+    .btn-apple {
       background-color: #000000;
       color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.22);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     }
 
-    .btn-portal-apple:hover {
+    .btn-apple:hover {
       background-color: #111827;
-      border-color: rgba(255, 255, 255, 0.45);
+      border-color: rgba(255, 255, 255, 0.4);
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
     }
 
-    /* Guest Fallback Footer */
-    .portal-guest-fallback {
+    .btn-apple:active {
+      transform: translateY(0);
+    }
+
+    /* Loading Spinner */
+    .auth-spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: authSpin 0.7s linear infinite;
+      margin-left: 4px;
+    }
+
+    @keyframes authSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-auth-provider.loading .auth-spinner {
+      display: inline-block;
+    }
+
+    .btn-auth-provider.loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    /* Inline Guest Fallback */
+    .auth-card-guest-option {
       margin-top: 1rem;
-      padding-top: 1.25rem;
+      padding-top: 1.15rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       color: #94a3b8;
-    }
-
-    .link-continue-guest {
-      color: #38bdf8;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.35rem;
-      transition: all 0.2s ease;
+      justify-content: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
     }
 
-    .link-continue-guest:hover {
+    .link-inline-guest {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 700;
+      color: #38bdf8;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .link-inline-guest:hover {
       color: #7dd3fc;
       text-decoration: underline;
     }
 
-    /* Responsive Breakdown */
-    @media (max-width: 860px) {
-      .signin-console-wrapper {
-        grid-template-columns: 1fr;
-        max-width: 480px;
+    /* Security Note Footer */
+    .auth-card-footer {
+      padding-top: 1.15rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 1rem;
+    }
+
+    .auth-security-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: #64748b;
+      margin: 0;
+    }
+
+    .auth-security-note svg {
+      color: #818cf8;
+    }
+
+    /* Mobile Responsive Precision Adjustments */
+    @media (max-width: 640px) {
+      .auth-top-bar {
+        padding: 0.85rem 1.15rem;
       }
-      .signin-left-panel {
-        padding: 2.25rem 2rem 1.75rem;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      .auth-brand-link {
+        font-size: 1.15rem;
       }
-      .signin-right-panel {
-        padding: 2.25rem 2rem 2.25rem;
+      .btn-continue-guest {
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+        font-weight: 800;
+        gap: 0.35rem;
       }
-      .signin-top-nav {
-        top: 0.85rem;
-        left: 0.85rem;
+      .auth-main-wrapper {
+        padding: 0.5rem 1rem 1.75rem;
+      }
+      .auth-card {
+        padding: 1.85rem 1.25rem 1.5rem;
+        border-radius: 20px;
+      }
+      .auth-brand-badge {
+        width: 46px;
+        height: 46px;
+        font-size: 1.35rem;
+        margin-bottom: 0.75rem;
+      }
+      .auth-title {
+        font-size: 1.35rem;
+        line-height: 1.25;
+      }
+      .auth-subtitle {
+        font-size: 0.86rem;
+      }
+      .btn-auth-provider {
+        height: 48px;
+        font-size: 0.92rem;
       }
     }
   </style>
@@ -403,118 +601,106 @@
   <script src="./auth-config.js"></script>
   <script src="./auth.js"></script>
 </head>
-<body class="signin-gui-body">
+<body class="auth-page-body">
 
-  <!-- Background Technical Grid Overlay -->
-  <div class="signin-grid-overlay" aria-hidden="true"></div>
+  <!-- SILKY GPU-ACCELERATED ANIMATED GRADIENT BACKGROUND -->
+  <div class="aurora-ambient-wrap" aria-hidden="true">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+    <div class="aurora-orb orb-4"></div>
+  </div>
 
-  <!-- Top Navigation: Return to Website -->
-  <nav class="signin-top-nav" aria-label="Return Navigation">
-    <a href="index.html" class="btn-back-to-site" id="btn-return-site">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M19 12H5"></path>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      <span>Return to Website</span>
-    </a>
-  </nav>
+  <!-- Ambient Glow Backdrop -->
+  <div class="auth-glow-backdrop" aria-hidden="true"></div>
 
-  <!-- Dual-Pane Member Authentication Console (Different GUI) -->
-  <main class="signin-console-wrapper">
-    <!-- Left Pane: Member Hub Showcase -->
-    <section class="signin-left-panel">
-      <div>
-        <div class="signin-badge-pill">
-          <span>◈ Member Access Hub</span>
+  <!-- Top Bar Navigation: Document Flow (Prevents Any Overlap) -->
+  <header class="auth-top-bar" aria-label="Sign In Navigation">
+    <div class="auth-top-bar-inner">
+      <a href="index.html" class="auth-brand-link" id="auth-top-brand" aria-label="Return to BrandName homepage">
+        <span class="auth-brand-symbol">◈</span>
+        <span class="auth-brand-title">BrandName</span>
+      </a>
+
+      <button type="button" class="btn-continue-guest" id="btn-skip-auth" aria-label="Continue as a guest">
+        <span>Continue as a guest</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14"></path>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Perfectly Centered Authentication Card (Looks Great on Desktop, Laptop & Mobile) -->
+  <main class="auth-main-wrapper">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="auth-brand-badge" aria-hidden="true">
+          <span class="brand-symbol">◈</span>
         </div>
-        <h1 class="signin-left-title">Unlock Your <span>Personalized Workspace</span></h1>
-        <p class="signin-left-desc">Sign in with your verified Google or Apple account to access synchronized workspaces, project exports, and priority capabilities.</p>
-
-        <ul class="member-perks-list">
-          <li class="member-perk-item">
-            <div class="perk-icon-wrap" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            </div>
-            <div class="perk-text-wrap">
-              <strong>Synchronized Cross-Device State</strong>
-              <span>Saved preferences and showcase settings sync across every browser tab.</span>
-            </div>
-          </li>
-          <li class="member-perk-item">
-            <div class="perk-icon-wrap" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            </div>
-            <div class="perk-text-wrap">
-              <strong>Priority Feature Engine</strong>
-              <span>Immediate access to real-time analytics and accelerated export tools.</span>
-            </div>
-          </li>
-          <li class="member-perk-item">
-            <div class="perk-icon-wrap" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            <div class="perk-text-wrap">
-              <strong>Passwordless Verified Security</strong>
-              <span>Official Google Identity and Apple ID tokens with zero password exposure.</span>
-            </div>
-          </li>
-        </ul>
+        <div class="auth-brand-label">BrandName</div>
+        <h1 class="auth-title">Welcome to BrandName</h1>
+        <p class="auth-subtitle">Sign in to access your account, saved preferences, and workspaces.</p>
       </div>
 
-      <div class="signin-left-footer">
-        <div class="status-live-indicator">
-          <span class="status-pulse-dot" aria-hidden="true"></span>
-          <span>Identity Verification Gateway Online</span>
-        </div>
-        <span>OAuth 2.0 PKCE</span>
-      </div>
-    </section>
-
-    <!-- Right Pane: Member Authentication Terminal -->
-    <section class="signin-right-panel">
-      <div class="auth-terminal-header">
-        <div class="terminal-glyph" aria-hidden="true">◈</div>
-        <h2 class="terminal-title">Member Sign In</h2>
-        <p class="terminal-subtitle">Select your identity provider to connect</p>
-      </div>
-
-      <!-- Alert / Status Banner -->
-      <div class="auth-alert" id="auth-alert" role="alert" style="display: none; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.25rem; font-size: 0.85rem; text-align: left;">
+      <!-- Feedback / Alert Notification -->
+      <div class="auth-alert" id="auth-alert" role="alert" style="display: none;">
+        <span class="auth-alert-icon" id="auth-alert-icon"></span>
         <span class="auth-alert-text" id="auth-alert-text"></span>
       </div>
 
-      <!-- Provider Stack -->
-      <div class="terminal-actions-stack">
-        <!-- 1. Google Button -->
-        <button type="button" class="btn-portal-provider btn-portal-google" id="btn-signin-google" aria-label="Sign in with Google">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-          </svg>
-          <span>Continue with Google</span>
-        </button>
+      <!-- Authentication Providers (Google & Apple) -->
+      <div class="auth-providers-list">
+        <!-- 1. Continue with Google -->
+        <div class="auth-provider-slot">
+          <!-- Official Google Identity Services Container -->
+          <div id="google-signin-btn-container" class="google-btn-slot"></div>
+          <!-- Interactive Google Button -->
+          <button type="button" class="btn-auth-provider btn-google" id="btn-google-trigger" aria-label="Continue with Google">
+            <svg class="provider-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span class="btn-text">Continue with Google</span>
+            <span class="auth-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
 
-        <!-- 2. Apple Button -->
-        <button type="button" class="btn-portal-provider btn-portal-apple" id="btn-signin-apple" aria-label="Sign in with Apple">
-          <svg viewBox="0 0 170 170" width="19" height="19" fill="currentColor" aria-hidden="true">
-            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.99-5.99-9.35-10.66-20.08-14.01-32.18-3.35-12.1-5.03-23.36-5.03-33.77 0-14.13 3.41-26.04 10.23-35.73 6.82-9.69 15.53-14.65 26.13-14.88 4.25 0 9.29 1.16 15.13 3.48 5.84 2.32 9.53 3.54 11.07 3.65 1.91-.22 5.84-1.55 11.8-3.99 5.96-2.44 11.06-3.53 15.3-3.27 13.92 1.09 24.58 6.47 31.98 16.14-12.19 7.4-18.17 17.51-17.94 30.34.22 10.01 4.09 18.39 11.61 25.13 7.52 6.74 16.48 10.55 26.88 11.43-2.39 7.08-5.11 14.37-8.15 21.87zM119.22 31.84c0-7.72 2.76-14.92 8.28-21.6 5.53-6.68 12.37-10.24 20.53-10.24.22 1.09.33 2.07.33 2.94 0 7.62-2.88 15.02-8.63 22.21-5.75 7.18-12.7 10.97-20.86 11.36-.11-1.31-.16-2.31-.16-3.01z"/>
-          </svg>
-          <span>Continue with Apple</span>
-        </button>
+        <!-- 2. Continue with Apple -->
+        <div class="auth-provider-slot">
+          <button type="button" class="btn-auth-provider btn-apple" id="btn-apple-trigger" aria-label="Continue with Apple">
+            <svg class="provider-icon" viewBox="0 0 170 170" width="20" height="20" fill="currentColor" aria-hidden="true">
+              <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.7-11.64-13.99-5.99-9.35-10.66-20.08-14.01-32.18-3.35-12.1-5.03-23.36-5.03-33.77 0-14.13 3.41-26.04 10.23-35.73 6.82-9.69 15.53-14.65 26.13-14.88 4.25 0 9.29 1.16 15.13 3.48 5.84 2.32 9.53 3.54 11.07 3.65 1.91-.22 5.84-1.55 11.8-3.99 5.96-2.44 11.06-3.53 15.3-3.27 13.92 1.09 24.58 6.47 31.98 16.14-12.19 7.4-18.17 17.51-17.94 30.34.22 10.01 4.09 18.39 11.61 25.13 7.52 6.74 16.48 10.55 26.88 11.43-2.39 7.08-5.11 14.37-8.15 21.87zM119.22 31.84c0-7.72 2.76-14.92 8.28-21.6 5.53-6.68 12.37-10.24 20.53-10.24.22 1.09.33 2.07.33 2.94 0 7.62-2.88 15.02-8.63 22.21-5.75 7.18-12.7 10.97-20.86 11.36-.11-1.31-.16-2.31-.16-3.01z"/>
+            </svg>
+            <span class="btn-text">Continue with Apple</span>
+            <span class="auth-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
 
-      <!-- Guest Option -->
-      <div class="portal-guest-fallback">
-        <p>Not ready to sign in? <a href="index.html" class="link-continue-guest" id="link-guest-return">Continue browsing as guest &rarr;</a></p>
+      <!-- Secondary Inline Guest Access Option -->
+      <div class="auth-card-guest-option">
+        <span>Exploring without an account?</span>
+        <button type="button" class="link-inline-guest" id="link-inline-guest">Continue as a guest &rarr;</button>
       </div>
-    </section>
+
+      <!-- Auth Footnote -->
+      <div class="auth-card-footer">
+        <p class="auth-security-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>Protected by official OAuth verification</span>
+        </p>
+      </div>
+    </div>
   </main>
 
+  <!-- Auth Controller Initialization -->
   <script>
     (function() {
-      // If already authenticated, redirect to destination immediately
+      // 1. If already authenticated as full member, redirect to destination
       if (window.AuthManager && window.AuthManager.isAuthenticated()) {
         const dest = window.AuthManager.getRedirectTarget();
         window.location.replace(dest);
@@ -522,14 +708,17 @@
       }
 
       const alertBox = document.getElementById('auth-alert');
+      const alertIcon = document.getElementById('auth-alert-icon');
       const alertText = document.getElementById('auth-alert-text');
-      const googleBtn = document.getElementById('btn-signin-google');
-      const appleBtn = document.getElementById('btn-signin-apple');
-      const returnBtn = document.getElementById('btn-return-site');
-      const guestLink = document.getElementById('link-guest-return');
+      const googleBtn = document.getElementById('btn-google-trigger');
+      const appleBtn = document.getElementById('btn-apple-trigger');
+      const skipBtn = document.getElementById('btn-skip-auth');
+      const inlineGuestBtn = document.getElementById('link-inline-guest');
+      const topBrandBtn = document.getElementById('auth-top-brand');
 
-      function handleGuestNav(e) {
-        e.preventDefault();
+      // Shared Guest Navigation Handler
+      function handleGuestNavigation(e) {
+        if (e) e.preventDefault();
         if (window.AuthManager && typeof window.AuthManager.enableGuestAccess === 'function') {
           window.AuthManager.enableGuestAccess();
         } else {
@@ -539,33 +728,40 @@
         window.location.replace(target);
       }
 
-      if (returnBtn) returnBtn.addEventListener('click', handleGuestNav);
-      if (guestLink) guestLink.addEventListener('click', handleGuestNav);
+      if (skipBtn) skipBtn.addEventListener('click', handleGuestNavigation);
+      if (inlineGuestBtn) inlineGuestBtn.addEventListener('click', handleGuestNavigation);
+      if (topBrandBtn) topBrandBtn.addEventListener('click', handleGuestNavigation);
 
       function showAlert(type, message) {
         if (!alertBox) return;
-        alertBox.style.display = 'block';
-        alertBox.style.backgroundColor = type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)';
-        alertBox.style.border = type === 'error' ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(16, 185, 129, 0.4)';
-        alertBox.style.color = type === 'error' ? '#f87171' : '#34d399';
+        alertBox.className = 'auth-alert auth-alert-' + type;
+        alertBox.style.display = 'flex';
         alertText.textContent = message;
+        if (type === 'error') {
+          alertIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+        } else if (type === 'success') {
+          alertIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        } else {
+          alertIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="8"></line></svg>';
+        }
       }
 
       function hideAlert() {
         if (alertBox) alertBox.style.display = 'none';
       }
 
-      // Initialize Google
+      // 2. Initialize Google Identity Services
       if (window.AuthManager && typeof window.AuthManager.initGoogleAuth === 'function') {
         window.AuthManager.initGoogleAuth({
           onSuccess: function(user) {
-            showAlert('success', 'Verified with Google. Redirecting to workspace...');
+            showAlert('success', 'Authenticated with Google. Loading portal...');
             setTimeout(function() {
               window.location.replace(window.AuthManager.getRedirectTarget());
             }, 300);
           },
           onError: function(err) {
-            showAlert('error', err.message || 'Google sign-in could not be completed.');
+            if (googleBtn) googleBtn.classList.remove('loading');
+            showAlert('error', err.message || 'Google authentication could not be completed.');
           }
         });
       }
@@ -573,21 +769,26 @@
       if (googleBtn) {
         googleBtn.addEventListener('click', function() {
           hideAlert();
+          googleBtn.classList.add('loading');
           window.AuthManager.triggerGooglePrompt({
             onSuccess: function(user) {
-              showAlert('success', 'Verified with Google. Redirecting to workspace...');
+              showAlert('success', 'Authenticated with Google. Loading portal...');
               setTimeout(function() {
                 window.location.replace(window.AuthManager.getRedirectTarget());
               }, 300);
             },
             onError: function(err) {
-              showAlert('error', err.message || 'Google sign-in could not be completed.');
+              googleBtn.classList.remove('loading');
+              showAlert('error', err.message || 'Google authentication could not be completed.');
             }
           });
+          setTimeout(function() {
+            googleBtn.classList.remove('loading');
+          }, 4000);
         });
       }
 
-      // Initialize Apple
+      // 3. Initialize Apple Sign-In
       if (window.AuthManager && typeof window.AuthManager.initAppleAuth === 'function') {
         window.AuthManager.initAppleAuth({
           onError: function(err) {
@@ -599,15 +800,17 @@
       if (appleBtn) {
         appleBtn.addEventListener('click', function() {
           hideAlert();
+          appleBtn.classList.add('loading');
           window.AuthManager.signInWithApple({
             onSuccess: function(user) {
-              showAlert('success', 'Verified with Apple. Redirecting to workspace...');
+              showAlert('success', 'Authenticated with Apple. Loading portal...');
               setTimeout(function() {
                 window.location.replace(window.AuthManager.getRedirectTarget());
               }, 300);
             },
             onError: function(err) {
-              showAlert('error', err.message || 'Apple sign-in could not be completed.');
+              appleBtn.classList.remove('loading');
+              showAlert('error', err.message || 'Apple authentication could not be completed.');
             }
           });
         });

@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="./style.css">
 
-  <!-- Self-Contained Complete Centering, Animated Gradient & Button Styles (Immune to GitHub Pages subpath/asset issues) -->
+  <!-- Self-Contained Unified Styles for Desktop, Laptop & Mobile (Immune to GitHub Pages subpath/asset issues) -->
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -31,16 +31,16 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Dead-center full viewport alignment */
+    /* Full Viewport Responsive Flex Container */
     body.auth-page-body {
       margin: 0;
-      padding: 1.5rem 1rem;
+      padding: 0;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex !important;
       flex-direction: column !important;
+      justify-content: space-between !important;
       align-items: center !important;
-      justify-content: center !important;
       background-color: #06080e;
       color: #f8fafc;
       position: relative;
@@ -151,76 +151,100 @@
       }
     }
 
-    /* Top-Right Navigation: Access Website Without Signing In */
-    .auth-top-nav {
-      position: fixed;
-      top: 1.25rem;
-      right: 1.5rem;
-      z-index: 100;
-      display: flex;
-      align-items: center;
+    /* Top Bar Navigation: Document Flow (Prevents Any Card Overlap) */
+    .auth-top-bar {
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      padding: 1.25rem 2rem;
+      box-sizing: border-box;
+      flex-shrink: 0;
     }
 
-    .btn-skip-to-site {
+    .auth-top-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .auth-brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: #ffffff;
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+      user-select: none;
+    }
+
+    .auth-brand-link:hover {
+      opacity: 0.85;
+    }
+
+    .auth-brand-symbol {
+      color: #818cf8;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    /* Bold Luminous White Button: Opposite of Black */
+    .btn-continue-guest {
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
-      padding: 0.65rem 1.25rem;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      padding: 0.65rem 1.35rem;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
       border-radius: 9999px;
       color: #ffffff;
       font-family: inherit;
       font-size: 0.92rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.01em;
       text-decoration: none;
       cursor: pointer;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18), 0 0 12px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
+      white-space: nowrap;
     }
 
-    .btn-skip-to-site span {
-      font-weight: 700;
+    .btn-continue-guest span {
+      font-weight: 800;
       color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
     }
 
-    .btn-skip-to-site:hover {
-      background: rgba(255, 255, 255, 0.22);
-      border-color: rgba(255, 255, 255, 0.6);
+    .btn-continue-guest:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: #ffffff;
       color: #ffffff;
       transform: translateY(-1px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.35);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.35), 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
-    .btn-skip-to-site:active {
+    .btn-continue-guest:active {
       transform: translateY(0);
     }
 
-    .btn-skip-to-site svg {
+    .btn-continue-guest svg {
       transition: transform 0.2s ease;
       flex-shrink: 0;
       color: #ffffff;
     }
 
-    .btn-skip-to-site:hover svg {
+    .btn-continue-guest:hover svg {
       transform: translateX(3px);
-    }
-
-    @media (max-width: 640px) {
-      .auth-top-nav {
-        top: 0.85rem;
-        right: 0.85rem;
-      }
-      .btn-skip-to-site {
-        padding: 0.45rem 0.85rem;
-        font-size: 0.8rem;
-        gap: 0.4rem;
-      }
     }
 
     /* Ambient atmospheric glow behind the card */
@@ -237,29 +261,31 @@
       z-index: 0;
     }
 
-    /* Centered main container */
+    /* Main Container: Centered Alignment */
     .auth-main-wrapper {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 430px;
+      max-width: 440px;
       margin: auto !important;
+      padding: 1.5rem 1.25rem 2.5rem;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
       box-sizing: border-box;
+      flex: 1 1 auto;
     }
 
     /* Glassmorphic authentication card */
     .auth-card {
       width: 100%;
-      background: rgba(15, 23, 42, 0.82);
+      background: rgba(15, 23, 42, 0.84);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 24px;
-      padding: 2.75rem 2.25rem 2.25rem;
+      padding: 2.75rem 2.25rem 2rem;
       box-shadow:
         0 25px 50px -12px rgba(0, 0, 0, 0.8),
         0 0 0 1px rgba(255, 255, 255, 0.06),
@@ -301,7 +327,7 @@
       font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .auth-title {
@@ -367,7 +393,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.25rem;
       width: 100%;
     }
 
@@ -474,9 +500,43 @@
       opacity: 0.8;
     }
 
-    .auth-card-footer {
-      padding-top: 1.25rem;
+    /* Inline Guest Fallback */
+    .auth-card-guest-option {
+      margin-top: 1rem;
+      padding-top: 1.15rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.86rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .link-inline-guest {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 700;
+      color: #38bdf8;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .link-inline-guest:hover {
+      color: #7dd3fc;
+      text-decoration: underline;
+    }
+
+    /* Security Note Footer */
+    .auth-card-footer {
+      padding-top: 1.15rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 1rem;
     }
 
     .auth-security-note {
@@ -492,13 +552,43 @@
       color: #818cf8;
     }
 
-    @media (max-width: 480px) {
+    /* Mobile Responsive Precision Adjustments */
+    @media (max-width: 640px) {
+      .auth-top-bar {
+        padding: 0.85rem 1.15rem;
+      }
+      .auth-brand-link {
+        font-size: 1.15rem;
+      }
+      .btn-continue-guest {
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+        font-weight: 800;
+        gap: 0.35rem;
+      }
+      .auth-main-wrapper {
+        padding: 0.5rem 1rem 1.75rem;
+      }
       .auth-card {
-        padding: 2.25rem 1.5rem 1.75rem;
+        padding: 1.85rem 1.25rem 1.5rem;
         border-radius: 20px;
+      }
+      .auth-brand-badge {
+        width: 46px;
+        height: 46px;
+        font-size: 1.35rem;
+        margin-bottom: 0.75rem;
       }
       .auth-title {
         font-size: 1.35rem;
+        line-height: 1.25;
+      }
+      .auth-subtitle {
+        font-size: 0.86rem;
+      }
+      .btn-auth-provider {
+        height: 48px;
+        font-size: 0.92rem;
       }
     }
   </style>
@@ -524,27 +614,34 @@
   <!-- Ambient Glow Backdrop -->
   <div class="auth-glow-backdrop" aria-hidden="true"></div>
 
-  <!-- Top-Right Navigation: Continue as a guest -->
-  <header class="auth-top-nav" aria-label="Quick Access Navigation">
-    <button type="button" class="btn-skip-to-site" id="btn-skip-auth" aria-label="Continue as a guest">
-      <span>Continue as a guest</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M5 12h14"></path>
-        <polyline points="12 5 19 12 12 19"></polyline>
-      </svg>
-    </button>
+  <!-- Top Bar Navigation: Document Flow (Prevents Any Overlap) -->
+  <header class="auth-top-bar" aria-label="Sign In Navigation">
+    <div class="auth-top-bar-inner">
+      <a href="index.html" class="auth-brand-link" id="auth-top-brand" aria-label="Return to BrandName homepage">
+        <span class="auth-brand-symbol">◈</span>
+        <span class="auth-brand-title">BrandName</span>
+      </a>
+
+      <button type="button" class="btn-continue-guest" id="btn-skip-auth" aria-label="Continue as a guest">
+        <span>Continue as a guest</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14"></path>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
   </header>
 
-  <!-- Perfectly Centered Authentication Card -->
+  <!-- Perfectly Centered Authentication Card (Looks Great on Desktop, Laptop & Mobile) -->
   <main class="auth-main-wrapper">
     <div class="auth-card">
       <div class="auth-card-header">
-        <div class="auth-brand-badge">
+        <div class="auth-brand-badge" aria-hidden="true">
           <span class="brand-symbol">◈</span>
         </div>
         <div class="auth-brand-label">BrandName</div>
         <h1 class="auth-title">Welcome to BrandName</h1>
-        <p class="auth-subtitle">Sign in to access your account and explore the website.</p>
+        <p class="auth-subtitle">Sign in to access your account, saved preferences, and workspaces.</p>
       </div>
 
       <!-- Feedback / Alert Notification -->
@@ -553,7 +650,7 @@
         <span class="auth-alert-text" id="auth-alert-text"></span>
       </div>
 
-      <!-- Authentication Providers (ONLY Google & Apple) -->
+      <!-- Authentication Providers (Google & Apple) -->
       <div class="auth-providers-list">
         <!-- 1. Continue with Google -->
         <div class="auth-provider-slot">
@@ -584,6 +681,12 @@
         </div>
       </div>
 
+      <!-- Secondary Inline Guest Access Option -->
+      <div class="auth-card-guest-option">
+        <span>Exploring without an account?</span>
+        <button type="button" class="link-inline-guest" id="link-inline-guest">Continue as a guest &rarr;</button>
+      </div>
+
       <!-- Auth Footnote -->
       <div class="auth-card-footer">
         <p class="auth-security-note">
@@ -610,20 +713,24 @@
       const googleBtn = document.getElementById('btn-google-trigger');
       const appleBtn = document.getElementById('btn-apple-trigger');
       const skipBtn = document.getElementById('btn-skip-auth');
+      const inlineGuestBtn = document.getElementById('link-inline-guest');
+      const topBrandBtn = document.getElementById('auth-top-brand');
 
-      // Bind Top-Right "Continue as a guest" button
-      if (skipBtn) {
-        skipBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (window.AuthManager && typeof window.AuthManager.enableGuestAccess === 'function') {
-            window.AuthManager.enableGuestAccess();
-          } else {
-            localStorage.setItem('brandname_guest_access', 'true');
-          }
-          const target = (window.AuthManager && window.AuthManager.getRedirectTarget()) || 'index.html';
-          window.location.replace(target);
-        });
+      // Shared Guest Navigation Handler
+      function handleGuestNavigation(e) {
+        if (e) e.preventDefault();
+        if (window.AuthManager && typeof window.AuthManager.enableGuestAccess === 'function') {
+          window.AuthManager.enableGuestAccess();
+        } else {
+          localStorage.setItem('brandname_guest_access', 'true');
+        }
+        const target = (window.AuthManager && window.AuthManager.getRedirectTarget()) || 'index.html';
+        window.location.replace(target);
       }
+
+      if (skipBtn) skipBtn.addEventListener('click', handleGuestNavigation);
+      if (inlineGuestBtn) inlineGuestBtn.addEventListener('click', handleGuestNavigation);
+      if (topBrandBtn) topBrandBtn.addEventListener('click', handleGuestNavigation);
 
       function showAlert(type, message) {
         if (!alertBox) return;
@@ -635,7 +742,7 @@
         } else if (type === 'success') {
           alertIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
         } else {
-          alertIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
+          alertIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="8"></line></svg>';
         }
       }
 

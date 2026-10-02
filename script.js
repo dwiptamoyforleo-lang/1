@@ -169,6 +169,24 @@ function initMobileMenu() {
       drawer.setAttribute('aria-hidden', 'true');
     });
   });
+
+  // Close drawer on outside click
+  document.addEventListener('click', (e) => {
+    if (!drawer.contains(e.target) && !menuBtn.contains(e.target) && drawer.classList.contains('active')) {
+      menuBtn.setAttribute('aria-expanded', 'false');
+      drawer.classList.remove('active');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  // Close drawer on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('active')) {
+      menuBtn.setAttribute('aria-expanded', 'false');
+      drawer.classList.remove('active');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+  });
 }
 
 /* ==========================================================================
