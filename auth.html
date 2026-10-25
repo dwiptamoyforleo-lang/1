@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In &amp; Register - BrandName</title>
+  <meta name="description" content="Sign in or create your BrandName account to access exclusive features and manage your settings.">
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Dedicated Auth Container Styles */
+    body.auth-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: var(--bg-body, #090d16);
+      color: var(--text-primary, #f8fafc);
+      font-family: var(--font-sans);
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    .auth-backdrop {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.28), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168, 85, 247, 0.16), transparent 70%),
+        radial-gradient(ellipse 50% 50% at 0% 100%, rgba(59, 130, 246, 0.16), transparent 70%);
+    }
+
+    .auth-header {
+      position: relative;
+      z-index: 10;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .auth-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary, #cbd5e1);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .auth-back-link:hover {
+      color: var(--color-primary, #3b82f6);
+    }
+
+    .auth-main {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem 3rem;
+      box-sizing: border-box;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-surface, #0f172a);
+      border: 1px solid var(--border-color, #1e293b);
+      border-radius: var(--radius-lg, 16px);
+      box-shadow: var(--shadow-xl);
+      padding: 2.25rem 2rem;
+      box-sizing: border-box;
+      backdrop-filter: blur(16px);
+    }
+
+    .auth-card-top {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .auth-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #818cf8;
+      font-size: 1.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .auth-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted, #94a3b8);
+      margin: 0;
+    }
+
+    /* Auth Navigation Tabs (Sign In vs Create Account) */
+    .auth-tabs {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color, #1e293b);
+      border-radius: var(--radius-md, 10px);
+      padding: 4px;
+      margin-bottom: 1.5rem;
+      gap: 4px;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.55rem;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: var(--text-muted, #94a3b8);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .auth-tab-btn.active {
+      background: var(--bg-surface-elevated, #162032);
+      color: var(--text-primary, #ffffff);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Form Fields */
+    .auth-form-group {
+      margin-bottom: 1.15rem;
+      text-align: left;
+    }
+
+    .auth-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary, #cbd5e1);
+      margin-bottom: 0.45rem;
+    }
+
+    .auth-input-wrapper {
+      position: relative;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 0.7rem 0.95rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color, #1e293b);
+      border-radius: var(--radius-sm, 6px);
+      color: var(--text-primary, #ffffff);
+      font-family: inherit;
+      font-size: 0.92rem;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--color-primary, #3b82f6);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    .auth-input::placeholder {
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    /* Submit Button */
+    .btn-auth-submit {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--color-primary, #3b82f6);
+      border: none;
+      border-radius: var(--radius-sm, 6px);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.35rem;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-auth-submit:hover:not(:disabled) {
+      background: var(--color-primary-hover, #60a5fa);
+      transform: translateY(-1px);
+    }
+
+    .btn-auth-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: var(--text-muted, #94a3b8);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color, #1e293b);
+    }
+
+    .auth-divider span {
+      padding: 0 0.85rem;
+    }
+
+    /* Google Button */
+    .btn-google-auth {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm, 6px);
+      color: #1e293b;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+      box-sizing: border-box;
+    }
+
+    .btn-google-auth:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+    }
+
+    /* Status Alert */
+    .auth-status-alert {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm, 6px);
+      font-size: 0.86rem;
+      margin-bottom: 1.25rem;
+      display: none;
+      text-align: left;
+    }
+
+    .auth-status-alert.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+    }
+
+    .auth-status-alert.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+
+    .auth-footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.84rem;
+      color: var(--text-muted, #94a3b8);
+      position: relative;
+      z-index: 10;
+    }
+
+    .auth-switch-text {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--text-muted, #94a3b8);
+    }
+
+    .auth-switch-link {
+      color: var(--color-primary, #3b82f6);
+      text-decoration: none;
+      font-weight: 600;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .auth-switch-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Spinner */
+    .auth-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="auth-page">
+  <div class="auth-backdrop" aria-hidden="true"></div>
+
+  <!-- Top Header Navigation -->
+  <header class="auth-header">
+    <a href="index.html" class="brand-logo" aria-label="BrandName Home">
+      <span class="brand-symbol">◈</span>
+      <span class="brand-name">BrandName</span>
+    </a>
+
+    <a href="index.html" class="auth-back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>Back to Home</span>
+    </a>
+  </header>
+
+  <!-- Auth Main Centerpiece -->
+  <main class="auth-main">
+    <div class="auth-card">
+      <div class="auth-card-top">
+        <div class="auth-logo-badge">◈</div>
+        <h1 class="auth-title" id="auth-heading">Welcome Back</h1>
+        <p class="auth-subtitle" id="auth-subheading">Sign in to access your BrandName dashboard and settings.</p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab-btn active" id="tab-btn-signin" role="tab" aria-selected="true">
+          Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" id="tab-btn-register" role="tab" aria-selected="false">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Alert Box -->
+      <div class="auth-status-alert" id="auth-alert" role="alert"></div>
+
+      <!-- Sign In Form -->
+      <form id="form-signin" novalidate>
+        <div class="auth-form-group">
+          <label class="auth-label" for="signin-email">Email Address</label>
+          <div class="auth-input-wrapper">
+            <input type="email" id="signin-email" class="auth-input" placeholder="name@example.com" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-label" for="signin-password">Password</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="signin-password" class="auth-input" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth-submit" id="btn-submit-signin">
+          <span>Sign In</span>
+        </button>
+      </form>
+
+      <!-- Create Account Form (Hidden by default) -->
+      <form id="form-register" style="display: none;" novalidate>
+        <div class="auth-form-group">
+          <label class="auth-label" for="register-name">Full Name</label>
+          <div class="auth-input-wrapper">
+            <input type="text" id="register-name" class="auth-input" placeholder="Alex Morgan" required autocomplete="name">
+          </div>
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-label" for="register-email">Email Address</label>
+          <div class="auth-input-wrapper">
+            <input type="email" id="register-email" class="auth-input" placeholder="name@example.com" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-label" for="register-password">Create Password</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="register-password" class="auth-input" placeholder="At least 6 characters" required autocomplete="new-password">
+          </div>
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-label" for="register-confirm-password">Confirm Password</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="register-confirm-password" class="auth-input" placeholder="Re-enter password" required autocomplete="new-password">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth-submit" id="btn-submit-register">
+          <span>Create Account</span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span>or</span>
+      </div>
+
+      <!-- Google Sign In Button -->
+      <button type="button" class="btn-google-auth" id="btn-google-auth">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+
+      <!-- Switch between forms -->
+      <p class="auth-switch-text" id="auth-switch-box">
+        <span id="auth-switch-prompt">Don't have an account?</span>
+        <button type="button" class="auth-switch-link" id="btn-switch-mode">Create an account</button>
+      </p>
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    <p>&copy; 2026 BrandName. Secure Authentication &amp; Account Center.</p>
+  </footer>
+
+  <!-- Script Module for Controller -->
+  <script type="module">
+    import { 
+      signIn, 
+      createAccount, 
+      signInWithGoogle, 
+      formatAuthError,
+      auth 
+    } from './auth-client.js';
+    import { onAuthStateChanged } from 'firebase/auth';
+
+    const tabSignIn = document.getElementById('tab-btn-signin');
+    const tabRegister = document.getElementById('tab-btn-register');
+    const formSignIn = document.getElementById('form-signin');
+    const formRegister = document.getElementById('form-register');
+    const heading = document.getElementById('auth-heading');
+    const subheading = document.getElementById('auth-subheading');
+    const switchPrompt = document.getElementById('auth-switch-prompt');
+    const switchLink = document.getElementById('btn-switch-mode');
+    const alertBox = document.getElementById('auth-alert');
+    const btnGoogle = document.getElementById('btn-google-auth');
+
+    // Get redirect URL from query params if any
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectUrl = urlParams.get('redirect') || 'index.html';
+
+    // If user is already logged in, redirect them
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.replace(redirectUrl);
+      }
+    });
+
+    let activeMode = 'signin'; // 'signin' or 'register'
+
+    function setMode(mode) {
+      activeMode = mode;
+      hideAlert();
+      if (mode === 'signin') {
+        tabSignIn.classList.add('active');
+        tabSignIn.setAttribute('aria-selected', 'true');
+        tabRegister.classList.remove('active');
+        tabRegister.setAttribute('aria-selected', 'false');
+        formSignIn.style.display = 'block';
+        formRegister.style.display = 'none';
+        heading.textContent = 'Welcome Back';
+        subheading.textContent = 'Sign in to access your BrandName dashboard and settings.';
+        switchPrompt.textContent = "Don't have an account?";
+        switchLink.textContent = 'Create an account';
+      } else {
+        tabRegister.classList.add('active');
+        tabRegister.setAttribute('aria-selected', 'true');
+        tabSignIn.classList.remove('active');
+        tabSignIn.setAttribute('aria-selected', 'false');
+        formSignIn.style.display = 'none';
+        formRegister.style.display = 'block';
+        heading.textContent = 'Create an Account';
+        subheading.textContent = 'Join BrandName in seconds to save preferences and collaborate.';
+        switchPrompt.textContent = 'Already have an account?';
+        switchLink.textContent = 'Sign in instead';
+      }
+    }
+
+    tabSignIn.addEventListener('click', () => setMode('signin'));
+    tabRegister.addEventListener('click', () => setMode('register'));
+    switchLink.addEventListener('click', () => setMode(activeMode === 'signin' ? 'register' : 'signin'));
+
+    function showAlert(type, message) {
+      alertBox.className = 'auth-status-alert ' + type;
+      alertBox.textContent = message;
+    }
+
+    function hideAlert() {
+      alertBox.className = 'auth-status-alert';
+      alertBox.textContent = '';
+    }
+
+    function setBtnLoading(btn, isLoading, defaultText) {
+      if (isLoading) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="auth-spinner"></span> <span>Processing...</span>`;
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = `<span>${defaultText}</span>`;
+      }
+    }
+
+    // Handle Sign In Submit
+    formSignIn.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      const submitBtn = document.getElementById('btn-submit-signin');
+
+      if (!email || !password) {
+        showAlert('error', 'Please enter both your email address and password.');
+        return;
+      }
+
+      setBtnLoading(submitBtn, true, 'Sign In');
+      try {
+        await signIn(email, password);
+        showAlert('success', 'Sign in successful! Redirecting...');
+        setTimeout(() => {
+          window.location.replace(redirectUrl);
+        }, 400);
+      } catch (err) {
+        showAlert('error', formatAuthError(err));
+        setBtnLoading(submitBtn, false, 'Sign In');
+      }
+    });
+
+    // Handle Create Account Submit
+    formRegister.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+      const name = document.getElementById('register-name').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('register-confirm-password').value;
+      const submitBtn = document.getElementById('btn-submit-register');
+
+      if (!name) {
+        showAlert('error', 'Please enter your full name.');
+        return;
+      }
+      if (!email) {
+        showAlert('error', 'Please enter your email address.');
+        return;
+      }
+      if (password.length < 6) {
+        showAlert('error', 'Password must be at least 6 characters long.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        showAlert('error', 'Passwords do not match. Please verify your password.');
+        return;
+      }
+
+      setBtnLoading(submitBtn, true, 'Create Account');
+      try {
+        await createAccount(name, email, password);
+        showAlert('success', 'Account created successfully! Redirecting...');
+        setTimeout(() => {
+          window.location.replace(redirectUrl);
+        }, 500);
+      } catch (err) {
+        showAlert('error', formatAuthError(err));
+        setBtnLoading(submitBtn, false, 'Create Account');
+      }
+    });
+
+    // Handle Google Sign In
+    btnGoogle.addEventListener('click', async () => {
+      hideAlert();
+      btnGoogle.disabled = true;
+      try {
+        await signInWithGoogle();
+        showAlert('success', 'Authenticated with Google! Redirecting...');
+        setTimeout(() => {
+          window.location.replace(redirectUrl);
+        }, 400);
+      } catch (err) {
+        showAlert('error', formatAuthError(err));
+        btnGoogle.disabled = false;
+      }
+    });
+
+    // Support hash or query param: auth.html#register or auth.html?mode=register
+    if (window.location.hash === '#register' || urlParams.get('mode') === 'register') {
+      setMode('register');
+    }
+  </script>
+</body>
+</html>
